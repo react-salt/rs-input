@@ -1,0 +1,27 @@
+{
+  "name": "rs-input",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node node_modules/.bin/rs-server",
+    "pre-publish": "node node_modules/.bin/pre-publish"
+  },
+  "author": "yanweiqing",
+  "license": "MIT",
+  "files": [
+    "assets/",
+    "dist/",
+    "examples/",
+    "src/"
+  ],
+  "dependencies": {
+    "react": "^0.14.x",
+    "rs-ui-core": "^0.1.0",
+    "rs-util": "^0.1.0"
+  },
+  "devDependencies": {
+    "react-dom": "^0.14.x",
+    "rs-server": "^0.1.1"
+  }
+}
