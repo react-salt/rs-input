@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 
 const SIZES = {
     'large': 'input-lg',
+    'normal': '',
     'small': 'input-sm'
 }
 export default class Input extends Component {
 
     static propTypes = {
-        password: React.PropTypes.bool
+        password: React.PropTypes.bool,
+        mySize: React.PropTypes.string
     }
 
     static defaultProps = {
-        password: false
+        password: false,
+        mySize: 'normal'
     }
 
     constructor(props) {
