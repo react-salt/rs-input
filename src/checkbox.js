@@ -30,18 +30,36 @@ export default class Checkbox extends Component {
         this.props.onChange(values);
     }
 
-    renderCheckbox(value, name) {
-        return (
-            <label>
-                <input
+    renderC(value, disabled) {
+        return <input
                     type="checkbox"
                     value={value}
                     onClick={this.handleClick}
                     checked={this.props.value && this.props.value.indexOf(value) > -1}
-                />
-                {name}
-            </label>
-        );
+                    disabled={disabled ? true : false}
+                />;
+    }
+
+    renderCheckbox(value, name, disabled) {
+        let dis = this.props.disabled || disabled;
+
+        if (this.props.inline) {
+            return (
+                <label className={`checkbox-inline ${dis ? 'disabled' : ''}`}>
+                    {this.renderC(value, dis)}
+                    {name}
+                </label>
+            );
+        } else {
+            return (
+                <div className={`checkbox ${dis ? 'disabled' : ''}`}>
+                    <label>
+                        {this.renderC(value, dis)}
+                        {name}
+                    </label>
+                </div>           
+            );
+        }
     }
 
     render() {
@@ -50,11 +68,15 @@ export default class Checkbox extends Component {
 
         if (Array.isArray(options)) {
             for (let value of options) {
-                tmp['rs-checkbox' + value.value] = this.renderCheckbox(value.value, value.name);
+                tmp['rs-checkbox' + value.value] = this.renderCheckbox(value.value, value.name, value.disabled);
             }
         } else {
             for (let value of Object.keys(options)) {
-                tmp['rs-checkbox' + value.toString()] = this.renderCheckbox(value, options.value);
+                if (typeof options.value !== 'object') {
+                    tmp['rs-checkbox' + value.toString()] = this.renderCheckbox(value, options.value, false);
+                } else {
+                    tmp['rs-checkbox' + value.toString()] = this.renderCheckbox(value, options.value.name, options.value.disabled);
+                }
             }
         }
 

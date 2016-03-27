@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+const SIZES = {
+    'large': 'input-lg',
+    'small': 'input-sm'
+}
 export default class Input extends Component {
 
     static propTypes = {
@@ -26,7 +30,7 @@ export default class Input extends Component {
             <Node
                 {...this.props}
                 {...this.attributes}
-                className="form-control"
+                className={`${this.props.className ? this.props.className : ''} form-control ${this.props.mySize !== '' ? SIZES[this.props.mySize] : ''}`}
                 onChange={this.handleChange}
                 value={this.props.value}
             />

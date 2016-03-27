@@ -5,25 +5,44 @@ export default class Radio extends Component {
 
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleClick(e) {
+    handleChange(e) {
         this.props.onChange(e.target.value);
     }
 
-    renderRadio(value, name) {
-        return (
-            <label>
-                <input
+    renderR(value, disabled) {
+        return <input
                     type="radio"
                     value={value}
-                    onClick={this.handleClick}
+                    onChange={this.handleChange}
                     checked={this.props.value === value}
-                />
-                {name}
-            </label>
-        );
+                    disabled={disabled ? true : false}
+                />;
+    }
+
+
+    renderRadio(value, name, disabled) {
+        let dis = this.props.disabled || disabled;
+
+        if (this.props.inline) {
+            return (
+                <label className={`radio-inline ${dis ? 'disabled' : ''}`}>
+                    {this.renderR(value, dis)}
+                    {name}
+                </label>
+            );
+        } else {
+            return (
+                <div className={`radio ${dis ? 'disabled' : ''}`}>
+                    <label>
+                        {this.renderR(value, dis)}
+                        {name}
+                    </label>
+                </div>
+            );
+        }
     }
 
     render() {
@@ -32,11 +51,15 @@ export default class Radio extends Component {
 
         if (Array.isArray(options)) {
             for (let value of options) {
-                tmp['rs-radio' + value.value] = this.renderRadio(value.value, value.name);
+                tmp['rs-radio-' + value.value] = this.renderRadio(value.value, value.name, value.disabled);
             }
         } else {
             for (let value of Object.keys(options)) {
-                tmp['rs-radio' + value.toString()] = this.renderRadio(value, options.value);
+                if (typeof options.value !== 'object') {
+                    tmp['rs-radio-' + value.toString()] = this.renderRadio(value, options.value, false);
+                } else {
+                    tmp['rs-radio-' + value.toString()] = this.renderRadio(value, options.value.name, options.name.disabled);
+                }
             }
         }
 
