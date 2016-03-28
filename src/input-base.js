@@ -8,12 +8,10 @@ const SIZES = {
 export default class Input extends Component {
 
     static propTypes = {
-        password: React.PropTypes.bool,
         mySize: React.PropTypes.string
     }
 
     static defaultProps = {
-        password: false,
         mySize: 'normal'
     }
 
